@@ -256,7 +256,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const lang = result.data.ghostSettings.lang
 
     // Load templates
-    const indexTemplate = path.resolve(`./src/templates/index.js`) // change here to select different home page
+    const indexTemplate = path.resolve(`./src/templates/custom/index-grid.js`) // change here to select different home page
     /*
         index-featured.js - no further changes needed
         index-medium - update postsPerPage to "14" in siteConfig.js

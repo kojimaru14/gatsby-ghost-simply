@@ -165,7 +165,7 @@ export const pageQuery = graphql`
             sort: { order: DESC, fields: [published_at] },
             filter: {
               authors: {elemMatch: {slug: {eq: $slug}}},
-              tags: {elemMatch: {name: {nin: ["#podcast","#portfolio","#custom-kusi-doc"]}}},
+              tags: {elemMatch: {name: {nin: ["#podcast","#portfolio","#dummy-kusi-doc"]}}},
             },
             limit: $limit,
             skip: $skip

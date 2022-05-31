@@ -205,7 +205,7 @@ export const postQuery = graphql`
         }
         relatedPosts: allGhostPost(
             filter: {
-                slug: {ne: $slug}, primary_tag: {slug: {eq: $primary_tag}}, tags: {elemMatch: {name: {nin: ["#portfolio","#podcast","#custom-kusi-doc"]}}}
+                slug: {ne: $slug}, primary_tag: {slug: {eq: $primary_tag}}, tags: {elemMatch: {name: {nin: ["#portfolio","#podcast","#dummy-kusi-doc"]}}}
                 },
             sort: { order: DESC, fields: [published_at] },
             limit: 6,

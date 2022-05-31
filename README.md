@@ -74,7 +74,7 @@ Rewritten from Handlebars theme to React/Gatsby.
 
 ```bash
 # With Gatsby CLI
-gatsby new gatsby-starter-ghost https://github.com/anarion80/gatsby-ghost-simply.git
+gatsby new gatsby-ghost-simply https://github.com/kojimaru14/gatsby-ghost-simply.git
 ```
 
 ```bash

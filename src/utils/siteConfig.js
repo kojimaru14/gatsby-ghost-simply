@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: `https://gatsby-ghost-simply.netlify.app`, // Site domain. Do not include a trailing slash!
+    siteUrl: `https://jikoblog.netlify.app`, // Site domain. Do not include a trailing slash!
 
     postsPerPage: 12, // Number of posts shown on paginated pages (changes this requires sometimes to delete the cache)
 
@@ -163,8 +163,8 @@ module.exports = {
         */
     ],
     searchSettings: {
-        key: `9cc5c67c358edfdd81455149d0`,
-        url: `https://gatsby.ghost.io`,
+        key: `c1337388d0628fcb51d1cea01a`,
+        url: `http://localhost:2368`,
         /* This is optional */
         options: {
             keys: [`title`, `plaintext`],

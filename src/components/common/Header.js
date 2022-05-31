@@ -14,6 +14,7 @@ import { relativeUrl } from "../../utils/relativeUrl"
 */
 
 const Header = ({ site, hasDropDown }) => {
+    const showSearchWidget = false
     useEffect(() => {
         document.querySelector(`.js-menu-toggle`).addEventListener(`click`, function (e) {
             e.preventDefault()
@@ -62,7 +63,7 @@ const Header = ({ site, hasDropDown }) => {
                             )}
                         </ThemeToggler>
 
-                        <SearchWidget />
+                        { showSearchWidget && <SearchWidget />}
                         <div className="js-menu-toggle menu-burger button is-white relative ml-2 lg:hidden"><span></span><span></span><span></span></div>
                     </div>
                 </div>

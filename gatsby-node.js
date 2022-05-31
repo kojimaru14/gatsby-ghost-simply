@@ -116,6 +116,7 @@ async function createJsonFileNodes(gatsbyNodeHelpers) {
 }
 
 exports.createPages = async ({ graphql, actions }) => {
+    const enableDocs = false
     const { createPage } = actions
     const result = await graphql(`
         {
@@ -409,28 +410,30 @@ exports.createPages = async ({ graphql, actions }) => {
         })
     })
 
-    // Create documentation post pages
-    docPosts.forEach(({ node }, index) => {
-        // This part here defines, that our docs posts will use
-        // a `/docs/:slug/` permalink.
-        const url = `/docs/${node.slug}`
-        const prev = index === 0 ? null : docPosts[index - 1].node
-        const next = index === docPosts.length - 1 ? null : docPosts[index + 1].node
+    if( enableDocs ) {
+        // Create documentation post pages
+        docPosts.forEach(({ node }, index) => {
+            // This part here defines, that our docs posts will use
+            // a `/docs/:slug/` permalink.
+            const url = `/docs/${node.slug}`
+            const prev = index === 0 ? null : docPosts[index - 1].node
+            const next = index === docPosts.length - 1 ? null : docPosts[index + 1].node
 
-        createPage({
-            path: url,
-            component: getCustomTemplate(node),
-            context: {
-                // Data passed to context is available
-                // in page queries as GraphQL variables.
-                slug: node.slug,
-                collectionPath: `/docs`,
-                prev: prev ? prev.slug : null,
-                next: next ? next.slug : null,
-                primary_tag: node.primary_tag ? node.primary_tag.slug : null,
-            },
+            createPage({
+                path: url,
+                component: getCustomTemplate(node),
+                context: {
+                    // Data passed to context is available
+                    // in page queries as GraphQL variables.
+                    slug: node.slug,
+                    collectionPath: `/docs`,
+                    prev: prev ? prev.slug : null,
+                    next: next ? next.slug : null,
+                    primary_tag: node.primary_tag ? node.primary_tag.slug : null,
+                },
+            })
         })
-    })
+    }
 
     // Create podcasts page with pagination
     paginate({
@@ -457,16 +460,18 @@ exports.createPages = async ({ graphql, actions }) => {
         },
     })
 
-    // Create docs page
-    createPage({
-        path: `/docs`,
-        component: docsTemplate,
-        context: {
-            // Data passed to context is available
-            // in page queries as GraphQL variables.
-            collectionPath: `/docs`,
-        },
-    })
+    if( enableDocs ) {
+        // Create docs page
+        createPage({
+            path: `/docs`,
+            component: docsTemplate,
+            context: {
+                // Data passed to context is available
+                // in page queries as GraphQL variables.
+                collectionPath: `/docs`,
+            },
+        })
+    }
 
     // Create archive example page
     paginate({

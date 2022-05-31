@@ -20,6 +20,7 @@ const PostDoc = ({ data, location, pageContext }) => {
     const nextPost = data.nextPost
     const previousPost = data.previousPost
     const t = getTranslation(useLang())
+    const showLeftPane = false
     const {
         breadcrumb: { crumbs },
     } = pageContext
@@ -116,7 +117,8 @@ const PostDoc = ({ data, location, pageContext }) => {
             <Layout footer={true} bodyClass="bg-gray-100" isPost={true}>
                 <div className="max-w-extreme mx-auto flex flex-col pb-16 px-4 lg:flex-row">
                     {/* {{!-- Navigating the documentation --}} */}
-                    <div className="sidebar flex-none border-r border-gray-300 order-2 md:w-64 lg:order-none" style={{ borderColor: `var(--border-color)` }}>
+                    { showLeftPane &&
+                     <div className="sidebar flex-none border-r border-gray-300 order-2 md:w-64 lg:order-none" style={{ borderColor: `var(--border-color)` }}>
                         <div className="sticky top-16 pr-5">
                             <nav className="py-12 overflow-y-auto lg:max-h-(screen-16) scroll-transparent">
                                 <div className="uppercase font-medium text-sm text-gray-600 mb-3 px-2">{t(`Getting_Started`, `Getting Started`)}</div>
@@ -145,7 +147,7 @@ const PostDoc = ({ data, location, pageContext }) => {
                                 </ul>
                             </nav>
                         </div>
-                    </div>
+                    </div> }
 
                     {/* {{!-- content of the documentation --}} */}
                     <article className="py-4 md:py-12 flex-grow">

@@ -323,6 +323,20 @@ module.exports = {
                 environments: [`production`, `development`],
             },
         },
+        {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+                trackingId: `UA-106485557-3`,
+                head: true
+            }
+        },
+        // {
+        //     resolve: `gatsby-plugin-google-adsense`,
+        //     options: {
+        //     publisherId: `ca-pub-3517396360803575`
+        //     },
+        // },
+        // ca-pub-3517396360803575
         `gatsby-plugin-sass`,
         `gatsby-plugin-twitter`,
         {

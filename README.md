@@ -199,6 +199,41 @@ Gatsby `develop` uses the `development` config in `.ghost.json` - while Gatsby `
 
 &nbsp;
 
+
+# Tips
+* With ordered list, `start` attribute is not respected. For e.g. 
+```
+<ol start="3">
+  <li>This is the first item</li>
+  <li>This is the second item</li>
+  <li>This is the third item</li>
+</ol>
+```
+This will render
+<ol>
+  <li>This is the first item</li>
+  <li>This is the second item</li>
+  <li>This is the third item</li>
+</ol>
+
+I've created a workaround to this. You can use the custom variable `--previous-count: `. For e.g.
+```
+<ol style="--previous-count: 2">
+    <li>This is the first item</li>
+    <li>This is the second item</li>
+    <li>This is the third item</li>
+</ol>
+```
+This will render
+<ol start="3">
+  <li>This is the first item</li>
+  <li>This is the second item</li>
+  <li>This is the third item</li>
+</ol>
+Note that you need to set the previous count as the parameter. (For e.g. if you want to start the list with 3, you need to choose 2)
+
+&nbsp;
+
 # 📝 Copyright & License
 
 Copyright (c) 2021 anarion80 - Released under the [GPLv3 license](LICENSE).

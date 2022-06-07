@@ -2271,7 +2271,7 @@ a > code[class*="language-"] {
 
 .post-body ol,
 .post-body ul {
-    counter-reset: a;
+    counter-reset: a var(--previous-count, 0);;
 }
 
 .post-body ol li,

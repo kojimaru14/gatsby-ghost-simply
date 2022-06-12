@@ -4,6 +4,8 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import { Layout } from '../../components/common'
 import { MetaData } from '../../components/common/meta'
+import ArticleHeader from '../../components/article/ArticleHeader'
+import ArticleFeaturedImage from '../../components/article/ArticleFeaturedImage'
 import { useLang, getTranslation } from '../../utils/use-lang'
 import { relativeUrl, resolveUrl } from "../../utils/relativeUrl"
 import { Link } from 'gatsby'
@@ -20,7 +22,9 @@ const PostDoc = ({ data, location, pageContext }) => {
     const nextPost = data.nextPost
     const previousPost = data.previousPost
     const t = getTranslation(useLang())
+    const useArticleHeader = true
     const showLeftPane = false
+    const showBreadCrumbs = false // If false, show tags instead of breadcrumbs
     const {
         breadcrumb: { crumbs },
     } = pageContext
@@ -151,8 +155,15 @@ const PostDoc = ({ data, location, pageContext }) => {
 
                     {/* {{!-- content of the documentation --}} */}
                     <article className="py-4 md:py-12 flex-grow">
-                        <div className="max-w-2xl mx-auto md:px-4">
+                        <div className="max-w-4xl mx-auto md:px-4">
+                            { useArticleHeader ? 
+                            <>
+                                <ArticleHeader post={post} /> 
+                                { post.feature_image && <ArticleFeaturedImage figureClass="block mx-auto max-w-4xl mt-12 px-4" zoomable={true} article={post} /> }
+                            </>
+                            :
                             <header>
+                                { showBreadCrumbs ? 
                                 <div className="mb-4 text-sm text-gray-500 noWrapWithEllipsis">
                                     {crumbs.map((crumb, i) => (
                                         <span key={i}>
@@ -161,9 +172,14 @@ const PostDoc = ({ data, location, pageContext }) => {
                                             }
                                         </span>
                                     ))}
-                                </div>
+                                </div> : 
+                                post.primary_tag &&
+                                    <div className="mb-3 text-gray-500 tracking-wider text-sm font-medium">
+                                        <Link className="uppercase hover:underline" to={relativeUrl(post.primary_tag.url)}>{post.primary_tag.name}</Link> {/* TODO: update to proper link */}
+                                    </div>
+                                }
                                 <h1 className="text-title">{post.title}</h1>
-                            </header>
+                            </header> }
 
                             <section className="post-body font-sans has-sidebar text-base leading-relaxed js-kusi-doc" dangerouslySetInnerHTML={{ __html: post.childHtmlRehype.html }}>
                             </section>
@@ -202,7 +218,7 @@ const PostDoc = ({ data, location, pageContext }) => {
                     <aside className="js-sidebar-right flex flex-col flex-none pt-8 pl-5 mb-12 order-2 md:w-64 lg:order-none lg:hidden xl:flex">
                         <div className="sticky top-24 js-sidebar-wrap hidden">
                             <div className="pt-4 pb-10 overflow-y-auto scroll-transparent lg:max-h-(screen-16)">
-                                <div className="uppercase font-medium text-sm text-gray-600 mb-3">{t(`On_this_page`), `On this page`}</div>
+                                <div className="uppercase font-medium text-sm text-gray-600 mb-3">{t(`Table of contents`), `Table of contents`}</div>
                                 <ul className="text-sm js-table-content leading-tight"></ul>
                             </div>
                         </div>

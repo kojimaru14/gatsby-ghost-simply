@@ -5,7 +5,7 @@ import { Author, SocialShare } from '../common'
 import { relativeUrl } from '../../utils/relativeUrl'
 
 const ArticleHeader = ({ post }) => (
-    <header className="post-header px-4 mx-auto max-w-740 relative z-3">
+    <header className="post-header px-4 mx-auto max-w-4xl relative z-3">
         { post.primary_tag &&
             <div className="mb-3 text-gray-500 tracking-wider text-sm font-medium">
                 <Link className="uppercase hover:underline" to={relativeUrl(post.primary_tag.url)}>{post.primary_tag.name}</Link> {/* TODO: update to proper link */}

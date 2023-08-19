@@ -9,6 +9,7 @@ import ArticleRelated from '../../components/article/ArticleRelated'
 import ArticleFeaturedImage from '../../components/article/ArticleFeaturedImage'
 import SidebarPost from '../../components/common/sidebar/SidebarPost'
 import { resolveUrl } from '../../utils/relativeUrl'
+import { useLang, getTranslation } from '../../utils/use-lang'
 
 /**
 * Single post view (/:slug)
@@ -22,6 +23,7 @@ const PostSidebar = ({ data, location, pageContext }) => {
     const nextPost = data.nextPost
     const relatedPosts = data.relatedPosts.edges
     const tags = post.tags.map(item => item.name)
+    const t = getTranslation(useLang())
     post.url = resolveUrl(pageContext.collectionPath, post.url)
     if (prevPost) {
         prevPost.url = resolveUrl(pageContext.collectionPath, prevPost.url)
@@ -73,11 +75,11 @@ const PostSidebar = ({ data, location, pageContext }) => {
                                         <div className="prev-next pb-8">
                                             <hr className="my-10" />
                                             {prevPost &&
-                                                <StoryPreviousNext post={prevPost} storyTitle="Previous article" divClass="mb-8" />
+                                                <StoryPreviousNext post={prevPost} storyTitle={ t(`Previous_article`) } divClass="mb-8" />
                                             }
 
                                             {nextPost &&
-                                                <StoryPreviousNext post={nextPost} storyTitle="Next article" divClass="" />
+                                                <StoryPreviousNext post={nextPost} storyTitle={ t(`Next_article`) } divClass="" />
                                             }
                                         </div>
                                     </footer>
@@ -146,7 +148,7 @@ export const postQuery = graphql`
                     }
                     width: 2000
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -160,7 +162,7 @@ export const postQuery = graphql`
                         width: 36
                         height: 36
                         placeholder: BLURRED
-                        formats: [AUTO, WEBP, AVIF]
+                        formats: [AUTO, WEBP]
                         )
                     }
                 }
@@ -179,7 +181,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -197,7 +199,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -207,7 +209,7 @@ export const postQuery = graphql`
             filter: {
                 slug: {ne: $slug}, primary_tag: {slug: {eq: $primary_tag}}, tags: {elemMatch: {name: {nin: ["#portfolio","#podcast","#dummy-kusi-doc"]}}}
                 },
-            sort: { order: DESC, fields: [published_at] },
+            sort: {published_at: DESC}
             limit: 6,
         ) {
             edges {
@@ -223,16 +225,16 @@ export const postQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
                     excerpt
                     html
                     reading_time
-                    created_at_pretty: created_at(formatString: "DD MMMM, YYYY")
-                    published_at_pretty: published_at(formatString: "DD MMMM, YYYY")
-                    updated_at_pretty: updated_at(formatString: "DD MMMM, YYYY")
+                    created_at_pretty: created_at(formatString: "DD MMMM, YYYY", locale: "pl")
+                    published_at_pretty: published_at(formatString: "DD MMMM, YYYY", locale: "pl")
+                    updated_at_pretty: updated_at(formatString: "DD MMMM, YYYY", locale: "pl")
                     published_at
                     updated_at
                     internal {

@@ -13,22 +13,12 @@ import { resolveUrl } from "../utils/relativeUrl"
 * This file renders a single post and loads all the content.
 *
 */
-const Podcast = ({ data, location, pageContext }) => {
+const Podcast = ({ data, pageContext }) => {
     //const page = data.ghostPage
     const posts = data.allGhostPost.edges
 
     return (
         <>
-            <MetaData
-                data={data}
-                location={location}
-                title="Podcasts"
-                description="Podcasts page"
-                type="WebSite"
-            />
-            {/* <Helmet>
-                <style type="text/css">{`${page.codeinjection_styles}`}</style>
-            </Helmet> */}
             <Layout footer={true} isPost={false} bodyClass="is-podcast has-cover is-head-transparent">
                 <div className="spc-header simply-hero-cover flex items-center justify-center relative min-h-lg py-24 px-4 bg-dark overflow-hidden">
 
@@ -87,10 +77,27 @@ Podcast.propTypes = {
 
 export default Podcast
 
+export const Head = ({ data, location }) => {
+    Head.propTypes = {
+        data: PropTypes.object.isRequired,
+        location: PropTypes.shape({
+            pathname: PropTypes.string.isRequired,
+        }).isRequired,
+    }
+
+    return <MetaData
+        data={data}
+        location={location}
+        title="Podcasts"
+        description="Podcasts page"
+        type="WebSite"
+    />
+}
+
 export const podcastQuery = graphql`
     query($limit: Int!, $skip: Int!) {
         allGhostPost(
-            sort: {order: DESC, fields: published_at}
+            sort: {published_at: DESC}
             filter: {tags: {elemMatch: {name: {in: ["#podcast"]}}}}
             limit: $limit,
             skip: $skip
@@ -105,7 +112,7 @@ export const podcastQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
@@ -119,7 +126,7 @@ export const podcastQuery = graphql`
                                 width: 36
                                 height: 36
                                 placeholder: BLURRED
-                                formats: [AUTO, WEBP, AVIF]
+                                formats: [AUTO, WEBP]
                                 )
                             }
                         }

@@ -12,18 +12,13 @@ import { useLang, getTranslation } from '../utils/use-lang'
 * Loads all posts for the requested tag incl. pagination.
 *
 */
-const Tag = ({ data, location, pageContext }) => {
+const Tag = ({ data, pageContext }) => {
     const tag = data.ghostTag
     const posts = data.allGhostPost.edges
     const t = getTranslation(useLang())
 
     return (
         <>
-            <MetaData
-                data={data}
-                location={location}
-                type="series"
-            />
             <Layout footer={true} isPost={false} bodyClass="is-tag">
                 <>
                     <section className="tag py-12 md:py-vw6 bg-gray-150">
@@ -49,9 +44,9 @@ const Tag = ({ data, location, pageContext }) => {
                                     </div>
                                 ))}
                             </div>
+                            <Pagination pageContext={pageContext} />
                         </div>
                     </div>
-                    <Pagination pageContext={pageContext} />
                 </>
             </Layout>
         </>
@@ -74,6 +69,21 @@ Tag.propTypes = {
 
 export default Tag
 
+export const Head = ({ data, location }) => {
+    Head.propTypes = {
+        data: PropTypes.object.isRequired,
+        location: PropTypes.shape({
+            pathname: PropTypes.string.isRequired,
+        }).isRequired,
+    }
+
+    return <MetaData
+        data={data}
+        location={location}
+        type="series"
+    />
+}
+
 export const pageQuery = graphql`
     query GhostTagQuery($slug: String!, $limit: Int!, $skip: Int!) {
         ghostTag(slug: { eq: $slug }) {
@@ -95,7 +105,7 @@ export const pageQuery = graphql`
                         width: 720
 
                         placeholder: BLURRED
-                        formats: [AUTO, WEBP, AVIF]
+                        formats: [AUTO, WEBP]
                         )
                     }
                 }
@@ -109,7 +119,7 @@ export const pageQuery = graphql`
                             width: 36
                             height: 36
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }

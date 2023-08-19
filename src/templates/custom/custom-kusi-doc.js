@@ -24,10 +24,6 @@ const PostDoc = ({ data, location, pageContext }) => {
     const t = getTranslation(useLang())
     const useArticleHeader = true
     const showLeftPane = false
-    const showBreadCrumbs = false // If false, show tags instead of breadcrumbs
-    const {
-        breadcrumb: { crumbs },
-    } = pageContext
     const capitalize = s => s && s[0].toUpperCase() + s.slice(1)
     post.url = resolveUrl(pageContext.collectionPath, post.url)
     if (previousPost) {
@@ -155,31 +151,13 @@ const PostDoc = ({ data, location, pageContext }) => {
 
                     {/* {{!-- content of the documentation --}} */}
                     <article className="py-4 md:py-12 flex-grow">
-                        <div className="max-w-4xl mx-auto md:px-4">
-                            { useArticleHeader ? 
+                        <div className="max-w-2xl mx-auto md:px-4">
+                        { useArticleHeader && 
                             <>
                                 <ArticleHeader post={post} /> 
                                 { post.feature_image && <ArticleFeaturedImage figureClass="block mx-auto max-w-4xl mt-12 px-4" zoomable={true} article={post} /> }
                             </>
-                            :
-                            <header>
-                                { showBreadCrumbs ? 
-                                <div className="mb-4 text-sm text-gray-500 noWrapWithEllipsis">
-                                    {crumbs.map((crumb, i) => (
-                                        <span key={i}>
-                                            <Link className="hover:text-primary" to={crumb.pathname} key={crumb.pathname}>{capitalize(crumb.crumbLabel)}</Link>
-                                            {i < crumbs.length - 1 && <>{` `}<svg key={i} className="icon h-3 w-3"><use xlinkHref="#icon-arrow-forward"></use></svg>{` `}</>
-                                            }
-                                        </span>
-                                    ))}
-                                </div> : 
-                                post.primary_tag &&
-                                    <div className="mb-3 text-gray-500 tracking-wider text-sm font-medium">
-                                        <Link className="uppercase hover:underline" to={relativeUrl(post.primary_tag.url)}>{post.primary_tag.name}</Link> {/* TODO: update to proper link */}
-                                    </div>
-                                }
-                                <h1 className="text-title">{post.title}</h1>
-                            </header> }
+                        }
 
                             <section className="post-body font-sans has-sidebar text-base leading-relaxed js-kusi-doc" dangerouslySetInnerHTML={{ __html: post.childHtmlRehype.html }}>
                             </section>
@@ -277,7 +255,7 @@ export const postQuery = graphql`
                     }
                     width: 2000
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -291,7 +269,7 @@ export const postQuery = graphql`
                         width: 36
                         height: 36
                         placeholder: BLURRED
-                        formats: [AUTO, WEBP, AVIF]
+                        formats: [AUTO, WEBP]
                         )
                     }
                 }
@@ -310,7 +288,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -328,7 +306,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -338,7 +316,7 @@ export const postQuery = graphql`
             filter: {
                 slug: {ne: $slug}, primary_tag: {slug: {eq: $primary_tag}}, tags: {elemMatch: {name: {nin: ["#portfolio","#podcast"]}}}
                 },
-            sort: { order: DESC, fields: [published_at] },
+            sort: {published_at: DESC}
             limit: 6,
         ) {
             edges {
@@ -354,7 +332,7 @@ export const postQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
@@ -373,7 +351,7 @@ export const postQuery = graphql`
             }
         }
         allGhostPost(
-            sort: { order: ASC, fields: [published_at] },
+            sort: {published_at: DESC}
             filter: {tags: {elemMatch: {name: {in: ["#custom-kusi-doc"]}}}}
         ) {
             edges {
@@ -386,7 +364,7 @@ export const postQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
@@ -400,7 +378,7 @@ export const postQuery = graphql`
                                 width: 36
                                 height: 36
                                 placeholder: BLURRED
-                                formats: [AUTO, WEBP, AVIF]
+                                formats: [AUTO, WEBP]
                                 )
                             }
                         }

@@ -16,7 +16,7 @@ import { useLang, getTranslation } from '../utils/use-lang'
 * Loads all posts for the requested author incl. pagination.
 *
 */
-const Author = ({ data, location, pageContext }) => {
+const Author = ({ data, pageContext }) => {
     const author = data.ghostAuthor
     const posts = data.allGhostPost.edges
     const t = getTranslation(useLang())
@@ -25,11 +25,6 @@ const Author = ({ data, location, pageContext }) => {
 
     return (
         <>
-            <MetaData
-                data={data}
-                location={location}
-                type="profile"
-            />
             <Layout footer={true} isPost={false} bodyClass="is-author has-cover is-head-transparent">
                 <div className="simply-hero-cover author shadow flex items-center justify-center relative min-h-lg py-24 bg-dark">
                     {/*{{!-- Featured Media - partials/components/media-cover.hbs --}} */}
@@ -99,9 +94,9 @@ const Author = ({ data, location, pageContext }) => {
                                 </div>
                             ))}
                         </div>
+                        <Pagination pageContext={pageContext} />
                     </div>
                 </div>
-                <Pagination pageContext={pageContext} />
             </Layout>
         </>
     )
@@ -132,6 +127,21 @@ Author.propTypes = {
 
 export default Author
 
+export const Head = ({ data, location }) => {
+    Head.propTypes = {
+        data: PropTypes.object.isRequired,
+        location: PropTypes.shape({
+            pathname: PropTypes.string.isRequired,
+        }).isRequired,
+    }
+
+    return <MetaData
+        data={data}
+        location={location}
+        type="profile"
+    />
+}
+
 export const pageQuery = graphql`
     query GhostAuthorQuery($slug: String!, $limit: Int!, $skip: Int!) {
         ghostAuthor(slug: { eq: $slug }) {
@@ -144,7 +154,7 @@ export const pageQuery = graphql`
                         height: 628
 
                         placeholder: BLURRED
-                        formats: [AUTO, WEBP, AVIF]
+                        formats: [AUTO, WEBP]
                         )
                     }
                 }
@@ -155,14 +165,14 @@ export const pageQuery = graphql`
                                     fit: COVER, cropFocus: ATTENTION
                                 }
                                 placeholder: BLURRED
-                                formats: [AUTO, WEBP, AVIF]
+                                formats: [AUTO, WEBP]
                                 )
                             }
                         }
             ...GhostAuthorFields
         }
         allGhostPost(
-            sort: { order: DESC, fields: [published_at] },
+            sort: {published_at: DESC}
             filter: {
               authors: {elemMatch: {slug: {eq: $slug}}},
               tags: {elemMatch: {name: {nin: ["#podcast","#portfolio","#dummy-kusi-doc"]}}},
@@ -180,7 +190,7 @@ export const pageQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
@@ -194,7 +204,7 @@ export const pageQuery = graphql`
                                 width: 36
                                 height: 36
                                 placeholder: BLURRED
-                                formats: [AUTO, WEBP, AVIF]
+                                formats: [AUTO, WEBP]
                                 )
                             }
                         }

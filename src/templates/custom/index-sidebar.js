@@ -28,7 +28,7 @@ const IndexSidebar = ({ data, location, pageContext }) => {
                         <div className="row">
                             <div className="col s12 l7">
                                 <div className="feed-entry-content">
-                                    <div className="feed-entry-wrap slist">
+                                    <div className="feed-entry-wrap slist ss3">
                                         {posts.map(item => <StoryGrid key={item.node.id} post={item.node} />)}
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@ export const pageQuery = graphql`
                     width: 720
 
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -92,7 +92,7 @@ export const pageQuery = graphql`
                              width: 36
                              height: 36
                              placeholder: BLURRED
-                             formats: [AUTO, WEBP, AVIF]
+                             formats: [AUTO, WEBP]
                          )
                      }
                  }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import PropTypes from 'prop-types'
-import { Helmet } from 'react-helmet'
-import { StaticQuery, graphql } from 'gatsby'
+import { Helmet } from "react-helmet"
+import { useStaticQuery, graphql } from 'gatsby'
 import {
     //Footer,
     FooterDark,
@@ -12,6 +12,7 @@ import {
 
 // Styles
 import '../../styles/main.css'
+import '../../styles/ghost.css'
 import '../../styles/cards/audio.css'
 import '../../styles/cards/before-after.css'
 import '../../styles/cards/blockquote.css'
@@ -36,7 +37,7 @@ import video from "../../utils/video"
 import beforeAfter from "../../utils/before-after"
 import siteConfig from "../../utils/siteConfig"
 import CookieConsent, { Cookies } from "react-cookie-consent"
-import { useLocation } from "@reach/router" // this helps tracking the location
+import { useLocation } from "@gatsbyjs/reach-router"// this helps tracking the location
 import { initializeAndTrack } from 'gatsby-plugin-gdpr-cookies'
 
 /**
@@ -47,18 +48,28 @@ import { initializeAndTrack } from 'gatsby-plugin-gdpr-cookies'
 * styles, and meta data for each page.
 *
 */
-const DefaultLayout = ({ data, children, bodyClass, footer, isPost }) => {
+const DefaultLayout = ({ data, children, bodyClass, footer/* , isPost */ }) => {
     const site = data.allGhostSettings.edges[0].node
     const hasDropDown = siteConfig.menuDropdown ? true : false
     const location = useLocation()
 
     /* to turn the Header transparent when hero picture is used (and back to normal when srolled down) */
     const scrollEventListener = () => {
+        const hasCover = document.body.closest(`.has-cover`)
+        const $jsHeader = document.querySelector(`.js-header`)
         const lastScrollY = window.scrollY
-        lastScrollY >= 60 ?
-            document.body.closest(`.has-cover`) && document.body.classList.remove(`is-head-transparent`)
-            :
-            document.body.closest(`.has-cover`) && document.body.classList.add(`is-head-transparent`)
+
+        if (lastScrollY > 5) {
+            $jsHeader.classList.add(`shadow-header`, `header-bg`)
+        } else {
+            $jsHeader.classList.remove(`shadow-header`, `header-bg`)
+        }
+
+        if (!hasCover) {
+            return
+        }
+
+        lastScrollY >= 60 ? document.body.classList.remove(`is-head-transparent`) : document.body.classList.add(`is-head-transparent`)
     }
 
     useEffect(() => {
@@ -82,14 +93,6 @@ const DefaultLayout = ({ data, children, bodyClass, footer, isPost }) => {
     return (
         <>
             <Helmet>
-                <html lang={site.lang} />
-                <style type="text/css">{`${site.codeinjection_styles}`}</style>
-                <style type="text/css">{`${site.codeinjection_head}`}</style>
-                <style type="text/css">{`:root {--ghost-accent-color: ${site.accent_color};}`}</style>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css"></link>
-                {/*<script src="/scripts/main.js" type="text/javascript"></script>*/}
-                {/* <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" as="style" onLoad="this.onload=null;this.rel='stylesheet'" /> */}
-
                 <body className={bodyClass} />
             </Helmet>
             <CookieConsent
@@ -160,51 +163,49 @@ DefaultLayout.propTypes = {
     }).isRequired,
 }
 
-const DefaultLayoutSettingsQuery = props => (
-    <StaticQuery
-        query={graphql`
-            query GhostSettings {
-                allGhostSettings {
-                    edges {
-                        node {
-                            localLogo {
-                                childImageSharp {
-                                gatsbyImageData(
-                                    transformOptions: {
-                                        fit: COVER, cropFocus: ATTENTION
-                                    }
-                                    height: 30
-                                    placeholder: BLURRED
-                                    formats: [AUTO, WEBP, AVIF]
-                                    )
+const DefaultLayoutSettingsQuery = (props) => {
+    const data = useStaticQuery(graphql`
+        query GhostSettings {
+            allGhostSettings {
+                edges {
+                    node {
+                        localLogo {
+                            childImageSharp {
+                            gatsbyImageData(
+                                transformOptions: {
+                                    fit: COVER, cropFocus: ATTENTION
                                 }
+                                height: 30
+                                placeholder: BLURRED
+                                formats: [AUTO, WEBP]
+                                )
                             }
-                            localIcon {
-                                childImageSharp {
-                                gatsbyImageData(
-                                    transformOptions: {
-                                        fit: COVER, cropFocus: ATTENTION
-                                    }
-                                    width: 36
-                                    height: 36
-                                    placeholder: BLURRED
-                                    formats: [AUTO, WEBP, AVIF]
-                                    )
-                                }
-                            }
-                            ...GhostSettingsFields
                         }
-                    }
-                }
-                file(relativePath: { eq: "ghost-icon.png" }) {
-                    childImageSharp {
-                        gatsbyImageData(layout: FIXED)
+                        localIcon {
+                            childImageSharp {
+                            gatsbyImageData(
+                                transformOptions: {
+                                    fit: COVER, cropFocus: ATTENTION
+                                }
+                                width: 36
+                                height: 36
+                                placeholder: BLURRED
+                                formats: [AUTO, WEBP]
+                                )
+                            }
+                        }
+                        ...GhostSettingsFields
                     }
                 }
             }
-        `}
-        render={data => <DefaultLayout data={data} {...props} />}
-    />
-)
+            file(relativePath: { eq: "ghost-icon.png" }) {
+                childImageSharp {
+                    gatsbyImageData(layout: FIXED)
+                }
+            }
+        }
+    `)
+    return <DefaultLayout data={data} {...props} />
+}
 
 export default DefaultLayoutSettingsQuery

@@ -96,7 +96,7 @@ export const archiveTagsQuery = graphql`
         allGhostTag(
             limit: 18
             filter: {visibility: {eq: "public"}}
-            sort: {order: DESC, fields: count___posts}
+            sort: {count: {posts: DESC}}
         ) {
             edges {
                 node {
@@ -108,7 +108,7 @@ export const archiveTagsQuery = graphql`
                             }
                             width: 600
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }
@@ -129,7 +129,7 @@ export const archiveTagsQuery = graphql`
                     }
                     width: 2000
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }

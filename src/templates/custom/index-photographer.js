@@ -150,7 +150,7 @@ export const pageQuery = graphql`
                     width: 2000
 
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -164,7 +164,7 @@ export const pageQuery = graphql`
                              width: 36
                              height: 36
                              placeholder: BLURRED
-                             formats: [AUTO, WEBP, AVIF]
+                             formats: [AUTO, WEBP]
                          )
                      }
                  }
@@ -176,7 +176,7 @@ export const pageQuery = graphql`
     featuredPosts: allGhostPost(
             limit: 3
             filter: {visibility: {eq: "public"}, featured: {eq: true}}
-            sort: {order: DESC, fields: [published_at]}
+            sort: {published_at: DESC}
         ) {
       edges {
         node {
@@ -188,7 +188,7 @@ export const pageQuery = graphql`
                     width: 1200
 
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -202,7 +202,7 @@ export const pageQuery = graphql`
                              width: 36
                              height: 36
                              placeholder: BLURRED
-                             formats: [AUTO, WEBP, AVIF]
+                             formats: [AUTO, WEBP]
                          )
                      }
                  }

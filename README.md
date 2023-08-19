@@ -1,5 +1,7 @@
 # Gatsby Starter Ghost with Simply Theme
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c56f0ee6-d093-4f14-8a30-c998f416ec62/deploy-status)](https://gatsby-ghost-simply.netlify.app)
+
 A starter template to build lightning fast websites with [Ghost](https://ghost.org) (as headless CMS in this case) & [Gatsby](https://gatsbyjs.org), using the excellent [Simply Ghost Theme](https://github.com/godofredoninja/simply).
 Rewritten from Handlebars theme to React/Gatsby.
 
@@ -57,6 +59,7 @@ Rewritten from Handlebars theme to React/Gatsby.
 - Medium style image zoom
 - [GDPR Cookie Consent and Google/Facebook tracking](https://github.com/andrezimpel/gatsby-plugin-gdpr-cookies)
 - New Ghost cards (GIF, buttons, NFT, callouts, toggles, quotes, products, audio, video, files, headers)
+- Members subscribing via email
 
 ## ❌ What is not yet working
 - [Logo Light / Dark Mode](https://godofredo.ninja/ghost-theme/simply/settings/#logolightdarkmode)
@@ -64,7 +67,7 @@ Rewritten from Handlebars theme to React/Gatsby.
   - [AMP](https://github.com/godofredoninja/Hodor-AMP-Ghost) Template
 - Pagination Infinite Scroll - not for static sites
 - Comments
-- Membership features
+- All Membership features
 
 ## ✏ What could be improved
 - Move videoResponsive and resizeImageGalleries to build time using some rehype plugin

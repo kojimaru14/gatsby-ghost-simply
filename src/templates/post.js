@@ -18,7 +18,7 @@ import { resolveUrl } from '../utils/relativeUrl'
 * This file renders a single post and loads all the content.
 *
 */
-const Post = ({ data, location, pageContext }) => {
+const Post = ({ data, pageContext }) => {
     const post = data.currentPost
     const prevPost = data.previousPost
     const nextPost = data.nextPost
@@ -34,11 +34,6 @@ const Post = ({ data, location, pageContext }) => {
 
     return (
         <>
-            <MetaData
-                data={data}
-                location={location}
-                type="article"
-            />
             <Helmet>
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
             </Helmet>
@@ -91,6 +86,21 @@ Post.propTypes = {
 
 export default Post
 
+export const Head = ({ data, location }) => {
+    Head.propTypes = {
+        data: PropTypes.object.isRequired,
+        location: PropTypes.shape({
+            pathname: PropTypes.string.isRequired,
+        }).isRequired,
+    }
+
+    return <MetaData
+        data={data}
+        location={location}
+        type="article"
+    />
+}
+
 export const postQuery = graphql`
     query($slug: String!, $next: String, $prev: String, $primary_tag: String) {
         currentPost: ghostPost(slug: { eq: $slug }) {
@@ -102,7 +112,7 @@ export const postQuery = graphql`
                     }
                     width: 2000
                     placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
+                    formats: [AUTO, WEBP]
                     )
                 }
             }
@@ -116,7 +126,7 @@ export const postQuery = graphql`
                         width: 36
                         height: 36
                         placeholder: BLURRED
-                        formats: [AUTO, WEBP, AVIF]
+                        formats: [AUTO, WEBP]
                         )
                     }
                 }
@@ -135,7 +145,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -153,7 +163,7 @@ export const postQuery = graphql`
                     }
                 aspectRatio: 1.84
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
                 )
             }
         }
@@ -163,7 +173,7 @@ export const postQuery = graphql`
             filter: {
                 slug: {ne: $slug}, primary_tag: {slug: {eq: $primary_tag}}, tags: {elemMatch: {name: {nin: ["#portfolio","#podcast","#dummy-kusi-doc"]}}}
                 },
-            sort: { order: DESC, fields: [published_at] },
+            sort: {published_at: DESC}
             limit: 6,
         ) {
             edges {
@@ -179,7 +189,7 @@ export const postQuery = graphql`
                             width: 720
 
                             placeholder: BLURRED
-                            formats: [AUTO, WEBP, AVIF]
+                            formats: [AUTO, WEBP]
                             )
                         }
                     }

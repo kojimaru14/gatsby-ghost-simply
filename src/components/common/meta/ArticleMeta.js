@@ -1,6 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
-import { StaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import url from 'url'
@@ -60,57 +59,55 @@ const ArticleMetaGhost = ({ data, settings, canonical }) => {
 
     return (
         <>
-            <Helmet>
-                <title>{ghostPost.meta_title || ghostPost.title}</title>
-                <meta name="description" content={ghostPost.meta_description || ghostPost.excerpt} />
-                <link rel="canonical" href={canonical} />
+            <title>{ghostPost.meta_title || ghostPost.title}</title>
+            <meta name="description" content={ghostPost.meta_description || ghostPost.excerpt} />
+            <link rel="canonical" href={canonical} />
 
-                <meta property="og:site_name" content={settings.title} />
-                <meta property="og:type" content="article" />
-                <meta property="og:title"
-                    content={
-                        ghostPost.og_title ||
-                        ghostPost.meta_title ||
-                        ghostPost.title
-                    }
-                />
-                <meta property="og:description"
-                    content={
-                        ghostPost.og_description ||
-                        ghostPost.excerpt ||
-                        ghostPost.meta_description
-                    }
-                />
-                <meta property="og:url" content={canonical} />
-                <meta property="article:published_time" content={ghostPost.published_at} />
-                <meta property="article:modified_time" content={ghostPost.updated_at} />
-                {publicTags.map((keyword, i) => (<meta property="article:tag" content={keyword} key={i} />))}
-                {author.facebookUrl && <meta property="article:author" content={author.facebookUrl} />}
+            <meta property="og:site_name" content={settings.title} />
+            <meta property="og:type" content="article" />
+            <meta property="og:title"
+                content={
+                    ghostPost.og_title ||
+                    ghostPost.meta_title ||
+                    ghostPost.title
+                }
+            />
+            <meta property="og:description"
+                content={
+                    ghostPost.og_description ||
+                    ghostPost.excerpt ||
+                    ghostPost.meta_description
+                }
+            />
+            <meta property="og:url" content={canonical} />
+            <meta property="article:published_time" content={ghostPost.published_at} />
+            <meta property="article:modified_time" content={ghostPost.updated_at} />
+            {publicTags.map((keyword, i) => (<meta property="article:tag" content={keyword} key={i} />))}
+            {author.facebookUrl && <meta property="article:author" content={author.facebookUrl} />}
 
-                <meta name="twitter:title"
-                    content={
-                        ghostPost.twitter_title ||
-                        ghostPost.meta_title ||
-                        ghostPost.title
-                    }
-                />
-                <meta name="twitter:description"
-                    content={
-                        ghostPost.twitter_description ||
-                        ghostPost.excerpt ||
-                        ghostPost.meta_description
-                    }
-                />
-                <meta name="twitter:url" content={canonical} />
-                <meta name="twitter:label1" content="Written by" />
-                <meta name="twitter:data1" content={author.name} />
-                {primaryTag && <meta name="twitter:label2" content="Filed under" />}
-                {primaryTag && <meta name="twitter:data2" content={primaryTag} />}
+            <meta name="twitter:title"
+                content={
+                    ghostPost.twitter_title ||
+                    ghostPost.meta_title ||
+                    ghostPost.title
+                }
+            />
+            <meta name="twitter:description"
+                content={
+                    ghostPost.twitter_description ||
+                    ghostPost.excerpt ||
+                    ghostPost.meta_description
+                }
+            />
+            <meta name="twitter:url" content={canonical} />
+            <meta name="twitter:label1" content="Written by" />
+            <meta name="twitter:data1" content={author.name} />
+            {primaryTag && <meta name="twitter:label2" content="Filed under" />}
+            {primaryTag && <meta name="twitter:data2" content={primaryTag} />}
 
-                {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
-                {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
-                <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
-            </Helmet>
+            {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
+            {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
+            <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
             <ImageMeta image={shareImage} />
         </>
     )
@@ -150,9 +147,8 @@ ArticleMetaGhost.propTypes = {
     canonical: PropTypes.string.isRequired,
 }
 
-const ArticleMetaQuery = props => (
-    <StaticQuery
-        query={graphql`
+const ArticleMetaQuery = (props) => {
+    const data = useStaticQuery(graphql`
             query GhostSettingsArticleMeta {
                 allGhostSettings {
                     edges {
@@ -162,9 +158,8 @@ const ArticleMetaQuery = props => (
                     }
                 }
             }
-        `}
-        render={data => <ArticleMetaGhost settings={data} {...props} />}
-    />
-)
+        `)
+    return <ArticleMetaGhost settings={data} {...props} />
+}
 
 export default ArticleMetaQuery

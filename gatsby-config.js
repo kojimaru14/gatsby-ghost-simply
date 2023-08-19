@@ -38,6 +38,8 @@ module.exports = {
     siteMetadata: {
         siteUrl: process.env.SITEURL || config.siteUrl,
     },
+    trailingSlash: `always`,
+    graphqlTypegen: true,
     plugins: [
         /**
          *  Content Plugins
@@ -69,7 +71,7 @@ module.exports = {
         {
             resolve: `gatsby-plugin-sharp`,
             options: {
-                failOnError: false,
+                failOn: `error`,
             },
         },
         `gatsby-transformer-sharp`,
@@ -91,27 +93,16 @@ module.exports = {
          *  Utility Plugins
          */
         {
-            resolve: `gatsby-plugin-ghost-manifest`,
+            resolve: `gatsby-plugin-manifest`,
             options: {
+                name: config.siteTitleMeta,
                 short_name: config.shortTitle,
                 start_url: `/`,
                 background_color: config.backgroundColor,
                 theme_color: config.themeColor,
-                display: `minimal-ui`,
+                display: `standalone`,
                 icon: `static/${config.siteIcon}`,
-                legacy: true,
-                query: `
-                {
-                    allGhostSettings {
-                        edges {
-                            node {
-                                title
-                                description
-                            }
-                        }
-                    }
-                }
-              `,
+                cache_busting_mode: `none`, // `query`(default), `name`, or `none`
             },
         },
         {
@@ -204,11 +195,20 @@ module.exports = {
                 addUncaughtPages: true,
             },
         },
+        {
+            resolve: `gatsby-plugin-netlify`,
+            options: {
+                //headers: {}, // option to add more headers. `Link` headers are transformed by the below criteria
+                //allPageHeaders: [], // option to add headers for all pages. `Link` headers are transformed by the below criteria
+                //mergeSecurityHeaders: true, // boolean to turn off the default security headers
+                mergeCachingHeaders: false, // boolean to turn off the default caching headers
+                //transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
+                generateMatchPathRewrites: true, // boolean to turn off automatic creation of redirect rules for client only paths
+            },
+        },
         `gatsby-plugin-catch-links`,
-        `gatsby-plugin-react-helmet`,
-        `gatsby-plugin-force-trailing-slashes`,
         `gatsby-plugin-offline`,
-        `gatsby-plugin-dark-mode`,
+        //`gatsby-plugin-dark-mode`,
         {
             resolve: `gatsby-plugin-webfonts`,
             options: {
@@ -217,12 +217,14 @@ module.exports = {
                         {
                             family: `PT Serif`,
                             variants: [`400`, `700`, `400i`],
+                            subsets: [`latin-ext`],
                             fontDisplay: `swap`,
                             strategy: config.fontStrategy,
                         },
                         {
                             family: `Inter`,
                             variants: [`400`, `500`, `600`, `700`],
+                            subsets: [`latin-ext`],
                             fontDisplay: `swap`,
                             strategy: config.fontStrategy,
                         },
@@ -231,7 +233,7 @@ module.exports = {
             },
         },
         {
-            resolve: `gatsby-transformer-rehype`,
+            resolve: `@yabood/gatsby-transformer-rehype`,
             options: {
                 // Condition for selecting an existing GraphQL node (optional)
                 // If not set, the transformer operates on file nodes.
@@ -339,40 +341,40 @@ module.exports = {
         // ca-pub-3517396360803575
         `gatsby-plugin-sass`,
         `gatsby-plugin-twitter`,
-        {
-            resolve: `gatsby-plugin-breadcrumb`,
-            options: {
-                // useAutoGen: required 'true' to use autogen
-                useAutoGen: true,
-                // autoGenHomeLabel: optional 'Home' is default
-                autoGenHomeLabel: `Home`,
-                // exclude: optional, include this array to exclude paths you don't want to
-                // generate breadcrumbs for (see below for details).
-                exclude: [
-                    `**/dev-404-page/**`,
-                    `**/404/**`,
-                    `**/404.html`,
-                    `**/offline-plugin-app-shell-fallback/**`,
-                    `**/portfolio/**`,
-                    `**/podcast/**`,
-                ],
-                // isMatchOptions: optional, include this object to configure the wildcard-match library.
-                excludeOptions: {
-                    separator: `.`,
-                },
-                // crumbLabelUpdates: optional, update specific crumbLabels in the path
-                //crumbLabelUpdates: [
-                //   {
-                //        pathname: `/book`,
-                //        crumbLabel: `Books`,
-                //    },
-                //],
-                // trailingSlashes: optional, will add trailing slashes to the end
-                // of crumb pathnames. default is false
-                trailingSlashes: true,
-                // usePathPrefix: optional, if you are using pathPrefix above
-                //usePathPrefix: `/blog`,
-            },
-        },
+        // {
+        //     resolve: `gatsby-plugin-breadcrumb`,
+        //     options: {
+        //         // useAutoGen: required 'true' to use autogen
+        //         useAutoGen: true,
+        //         // autoGenHomeLabel: optional 'Home' is default
+        //         autoGenHomeLabel: `Home`,
+        //         // exclude: optional, include this array to exclude paths you don't want to
+        //         // generate breadcrumbs for (see below for details).
+        //         exclude: [
+        //             `**/dev-404-page/**`,
+        //             `**/404/**`,
+        //             `**/404.html`,
+        //             `**/offline-plugin-app-shell-fallback/**`,
+        //             `**/portfolio/**`,
+        //             `**/podcast/**`,
+        //         ],
+        //         // isMatchOptions: optional, include this object to configure the wildcard-match library.
+        //         excludeOptions: {
+        //             separator: `.`,
+        //         },
+        //         // crumbLabelUpdates: optional, update specific crumbLabels in the path
+        //         //crumbLabelUpdates: [
+        //         //   {
+        //         //        pathname: `/book`,
+        //         //        crumbLabel: `Books`,
+        //         //    },
+        //         //],
+        //         // trailingSlashes: optional, will add trailing slashes to the end
+        //         // of crumb pathnames. default is false
+        //         trailingSlashes: true,
+        //         // usePathPrefix: optional, if you are using pathPrefix above
+        //         //usePathPrefix: `/blog`,
+        //     },
+        // },
     ],
 }

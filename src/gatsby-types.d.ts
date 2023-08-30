@@ -965,6 +965,7 @@ type GhostNavigationSortInput = {
 };
 
 type GhostPage = Node & {
+  readonly access: Maybe<Scalars['Boolean']>;
   readonly authors: ReadonlyArray<Maybe<GhostAuthor>>;
   readonly canonical_url: Maybe<Scalars['String']>;
   readonly children: ReadonlyArray<Node>;
@@ -981,6 +982,7 @@ type GhostPage = Node & {
   readonly feature_image_alt: Maybe<Scalars['String']>;
   readonly feature_image_caption: Maybe<Scalars['String']>;
   readonly featured: Scalars['Boolean'];
+  readonly ghostId: Maybe<Scalars['String']>;
   readonly html: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
@@ -1080,6 +1082,7 @@ type GhostPageEdge = {
 };
 
 type GhostPageFieldSelector = {
+  readonly access: InputMaybe<FieldSelectorEnum>;
   readonly authors: InputMaybe<GhostAuthorFieldSelector>;
   readonly canonical_url: InputMaybe<FieldSelectorEnum>;
   readonly children: InputMaybe<NodeFieldSelector>;
@@ -1096,6 +1099,7 @@ type GhostPageFieldSelector = {
   readonly feature_image_alt: InputMaybe<FieldSelectorEnum>;
   readonly feature_image_caption: InputMaybe<FieldSelectorEnum>;
   readonly featured: InputMaybe<FieldSelectorEnum>;
+  readonly ghostId: InputMaybe<FieldSelectorEnum>;
   readonly html: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
@@ -1126,6 +1130,7 @@ type GhostPageFieldSelector = {
 };
 
 type GhostPageFilterInput = {
+  readonly access: InputMaybe<BooleanQueryOperatorInput>;
   readonly authors: InputMaybe<GhostAuthorFilterListInput>;
   readonly canonical_url: InputMaybe<StringQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
@@ -1142,6 +1147,7 @@ type GhostPageFilterInput = {
   readonly feature_image_alt: InputMaybe<StringQueryOperatorInput>;
   readonly feature_image_caption: InputMaybe<StringQueryOperatorInput>;
   readonly featured: InputMaybe<BooleanQueryOperatorInput>;
+  readonly ghostId: InputMaybe<StringQueryOperatorInput>;
   readonly html: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
@@ -1213,6 +1219,7 @@ type GhostPageGroupConnection_sumArgs = {
 };
 
 type GhostPageSortInput = {
+  readonly access: InputMaybe<SortOrderEnum>;
   readonly authors: InputMaybe<GhostAuthorSortInput>;
   readonly canonical_url: InputMaybe<SortOrderEnum>;
   readonly children: InputMaybe<NodeSortInput>;
@@ -1229,6 +1236,7 @@ type GhostPageSortInput = {
   readonly feature_image_alt: InputMaybe<SortOrderEnum>;
   readonly feature_image_caption: InputMaybe<SortOrderEnum>;
   readonly featured: InputMaybe<SortOrderEnum>;
+  readonly ghostId: InputMaybe<SortOrderEnum>;
   readonly html: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
@@ -1271,7 +1279,6 @@ type GhostPost = Node & {
   readonly codeinjection_head: Maybe<Scalars['String']>;
   readonly codeinjection_styles: Maybe<Scalars['String']>;
   readonly comment_id: Maybe<Scalars['String']>;
-  readonly comments: Maybe<Scalars['Boolean']>;
   readonly created_at: Scalars['Date'];
   readonly custom_excerpt: Maybe<Scalars['String']>;
   readonly custom_template: Maybe<Scalars['String']>;
@@ -1408,7 +1415,6 @@ type GhostPostFieldSelector = {
   readonly codeinjection_head: InputMaybe<FieldSelectorEnum>;
   readonly codeinjection_styles: InputMaybe<FieldSelectorEnum>;
   readonly comment_id: InputMaybe<FieldSelectorEnum>;
-  readonly comments: InputMaybe<FieldSelectorEnum>;
   readonly created_at: InputMaybe<FieldSelectorEnum>;
   readonly custom_excerpt: InputMaybe<FieldSelectorEnum>;
   readonly custom_template: InputMaybe<FieldSelectorEnum>;
@@ -1476,7 +1482,6 @@ type GhostPostFilterInput = {
   readonly codeinjection_head: InputMaybe<StringQueryOperatorInput>;
   readonly codeinjection_styles: InputMaybe<StringQueryOperatorInput>;
   readonly comment_id: InputMaybe<StringQueryOperatorInput>;
-  readonly comments: InputMaybe<BooleanQueryOperatorInput>;
   readonly created_at: InputMaybe<DateQueryOperatorInput>;
   readonly custom_excerpt: InputMaybe<StringQueryOperatorInput>;
   readonly custom_template: InputMaybe<StringQueryOperatorInput>;
@@ -1569,7 +1574,6 @@ type GhostPostSortInput = {
   readonly codeinjection_head: InputMaybe<SortOrderEnum>;
   readonly codeinjection_styles: InputMaybe<SortOrderEnum>;
   readonly comment_id: InputMaybe<SortOrderEnum>;
-  readonly comments: InputMaybe<SortOrderEnum>;
   readonly created_at: InputMaybe<SortOrderEnum>;
   readonly custom_excerpt: InputMaybe<SortOrderEnum>;
   readonly custom_template: InputMaybe<SortOrderEnum>;
@@ -1622,7 +1626,6 @@ type GhostSettings = Node & {
   readonly default_locale: Maybe<Scalars['String']>;
   readonly description: Maybe<Scalars['String']>;
   readonly facebook: Maybe<Scalars['String']>;
-  readonly fields: Maybe<GhostSettingsFields>;
   readonly ghostId: Maybe<Scalars['Int']>;
   readonly icon: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
@@ -1717,7 +1720,6 @@ type GhostSettingsFieldSelector = {
   readonly default_locale: InputMaybe<FieldSelectorEnum>;
   readonly description: InputMaybe<FieldSelectorEnum>;
   readonly facebook: InputMaybe<FieldSelectorEnum>;
-  readonly fields: InputMaybe<GhostSettingsFieldsFieldSelector>;
   readonly ghostId: InputMaybe<FieldSelectorEnum>;
   readonly icon: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
@@ -1755,30 +1757,6 @@ type GhostSettingsFieldSelector = {
   readonly version: InputMaybe<FieldSelectorEnum>;
 };
 
-type GhostSettingsFields = {
-  readonly localCoverImage: Maybe<Scalars['String']>;
-  readonly localIcon: Maybe<Scalars['String']>;
-  readonly localLogo: Maybe<Scalars['String']>;
-};
-
-type GhostSettingsFieldsFieldSelector = {
-  readonly localCoverImage: InputMaybe<FieldSelectorEnum>;
-  readonly localIcon: InputMaybe<FieldSelectorEnum>;
-  readonly localLogo: InputMaybe<FieldSelectorEnum>;
-};
-
-type GhostSettingsFieldsFilterInput = {
-  readonly localCoverImage: InputMaybe<StringQueryOperatorInput>;
-  readonly localIcon: InputMaybe<StringQueryOperatorInput>;
-  readonly localLogo: InputMaybe<StringQueryOperatorInput>;
-};
-
-type GhostSettingsFieldsSortInput = {
-  readonly localCoverImage: InputMaybe<SortOrderEnum>;
-  readonly localIcon: InputMaybe<SortOrderEnum>;
-  readonly localLogo: InputMaybe<SortOrderEnum>;
-};
-
 type GhostSettingsFilterInput = {
   readonly accent_color: InputMaybe<StringQueryOperatorInput>;
   readonly active_timezone: InputMaybe<StringQueryOperatorInput>;
@@ -1791,7 +1769,6 @@ type GhostSettingsFilterInput = {
   readonly default_locale: InputMaybe<StringQueryOperatorInput>;
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly facebook: InputMaybe<StringQueryOperatorInput>;
-  readonly fields: InputMaybe<GhostSettingsFieldsFilterInput>;
   readonly ghostId: InputMaybe<IntQueryOperatorInput>;
   readonly icon: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
@@ -1882,7 +1859,6 @@ type GhostSettingsSortInput = {
   readonly default_locale: InputMaybe<SortOrderEnum>;
   readonly description: InputMaybe<SortOrderEnum>;
   readonly facebook: InputMaybe<SortOrderEnum>;
-  readonly fields: InputMaybe<GhostSettingsFieldsSortInput>;
   readonly ghostId: InputMaybe<SortOrderEnum>;
   readonly icon: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
@@ -2130,7 +2106,6 @@ type GhostTiers = Node & {
   readonly active: Scalars['Boolean'];
   readonly children: ReadonlyArray<Node>;
   readonly created_at: Maybe<Scalars['Date']>;
-  readonly currency: Maybe<Scalars['String']>;
   readonly description: Maybe<Scalars['String']>;
   readonly ghostId: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
@@ -2140,7 +2115,6 @@ type GhostTiers = Node & {
   readonly parent: Maybe<Node>;
   readonly slug: Scalars['String'];
   readonly stripe_prices: Maybe<Scalars['String']>;
-  readonly trial_days: Maybe<Scalars['Int']>;
   readonly type: Maybe<Scalars['String']>;
   readonly updated_at: Maybe<Scalars['Date']>;
   readonly visibility: Scalars['String'];
@@ -2213,7 +2187,6 @@ type GhostTiersFieldSelector = {
   readonly active: InputMaybe<FieldSelectorEnum>;
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly created_at: InputMaybe<FieldSelectorEnum>;
-  readonly currency: InputMaybe<FieldSelectorEnum>;
   readonly description: InputMaybe<FieldSelectorEnum>;
   readonly ghostId: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
@@ -2223,7 +2196,6 @@ type GhostTiersFieldSelector = {
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
   readonly stripe_prices: InputMaybe<FieldSelectorEnum>;
-  readonly trial_days: InputMaybe<FieldSelectorEnum>;
   readonly type: InputMaybe<FieldSelectorEnum>;
   readonly updated_at: InputMaybe<FieldSelectorEnum>;
   readonly visibility: InputMaybe<FieldSelectorEnum>;
@@ -2235,7 +2207,6 @@ type GhostTiersFilterInput = {
   readonly active: InputMaybe<BooleanQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly created_at: InputMaybe<DateQueryOperatorInput>;
-  readonly currency: InputMaybe<StringQueryOperatorInput>;
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly ghostId: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
@@ -2245,7 +2216,6 @@ type GhostTiersFilterInput = {
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
   readonly stripe_prices: InputMaybe<StringQueryOperatorInput>;
-  readonly trial_days: InputMaybe<IntQueryOperatorInput>;
   readonly type: InputMaybe<StringQueryOperatorInput>;
   readonly updated_at: InputMaybe<DateQueryOperatorInput>;
   readonly visibility: InputMaybe<StringQueryOperatorInput>;
@@ -2298,7 +2268,6 @@ type GhostTiersSortInput = {
   readonly active: InputMaybe<SortOrderEnum>;
   readonly children: InputMaybe<NodeSortInput>;
   readonly created_at: InputMaybe<SortOrderEnum>;
-  readonly currency: InputMaybe<SortOrderEnum>;
   readonly description: InputMaybe<SortOrderEnum>;
   readonly ghostId: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
@@ -2308,7 +2277,6 @@ type GhostTiersSortInput = {
   readonly parent: InputMaybe<NodeSortInput>;
   readonly slug: InputMaybe<SortOrderEnum>;
   readonly stripe_prices: InputMaybe<SortOrderEnum>;
-  readonly trial_days: InputMaybe<SortOrderEnum>;
   readonly type: InputMaybe<SortOrderEnum>;
   readonly updated_at: InputMaybe<SortOrderEnum>;
   readonly visibility: InputMaybe<SortOrderEnum>;
@@ -3924,6 +3892,7 @@ type Query_ghostAuthorArgs = {
 
 
 type Query_ghostPageArgs = {
+  access: InputMaybe<BooleanQueryOperatorInput>;
   authors: InputMaybe<GhostAuthorFilterListInput>;
   canonical_url: InputMaybe<StringQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
@@ -3940,6 +3909,7 @@ type Query_ghostPageArgs = {
   feature_image_alt: InputMaybe<StringQueryOperatorInput>;
   feature_image_caption: InputMaybe<StringQueryOperatorInput>;
   featured: InputMaybe<BooleanQueryOperatorInput>;
+  ghostId: InputMaybe<StringQueryOperatorInput>;
   html: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
@@ -3981,7 +3951,6 @@ type Query_ghostPostArgs = {
   codeinjection_head: InputMaybe<StringQueryOperatorInput>;
   codeinjection_styles: InputMaybe<StringQueryOperatorInput>;
   comment_id: InputMaybe<StringQueryOperatorInput>;
-  comments: InputMaybe<BooleanQueryOperatorInput>;
   created_at: InputMaybe<DateQueryOperatorInput>;
   custom_excerpt: InputMaybe<StringQueryOperatorInput>;
   custom_template: InputMaybe<StringQueryOperatorInput>;
@@ -4035,7 +4004,6 @@ type Query_ghostSettingsArgs = {
   default_locale: InputMaybe<StringQueryOperatorInput>;
   description: InputMaybe<StringQueryOperatorInput>;
   facebook: InputMaybe<StringQueryOperatorInput>;
-  fields: InputMaybe<GhostSettingsFieldsFilterInput>;
   ghostId: InputMaybe<IntQueryOperatorInput>;
   icon: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
@@ -4108,7 +4076,6 @@ type Query_ghostTiersArgs = {
   active: InputMaybe<BooleanQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
   created_at: InputMaybe<DateQueryOperatorInput>;
-  currency: InputMaybe<StringQueryOperatorInput>;
   description: InputMaybe<StringQueryOperatorInput>;
   ghostId: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
@@ -4118,7 +4085,6 @@ type Query_ghostTiersArgs = {
   parent: InputMaybe<NodeFilterInput>;
   slug: InputMaybe<StringQueryOperatorInput>;
   stripe_prices: InputMaybe<StringQueryOperatorInput>;
-  trial_days: InputMaybe<IntQueryOperatorInput>;
   type: InputMaybe<StringQueryOperatorInput>;
   updated_at: InputMaybe<DateQueryOperatorInput>;
   visibility: InputMaybe<StringQueryOperatorInput>;
@@ -4604,21 +4570,25 @@ type SiteFunctionSortInput = {
 };
 
 type SiteGraphqlTypegen = {
+  readonly documentSearchPaths: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
   readonly generateOnBuild: Maybe<Scalars['Boolean']>;
   readonly typesOutputPath: Maybe<Scalars['String']>;
 };
 
 type SiteGraphqlTypegenFieldSelector = {
+  readonly documentSearchPaths: InputMaybe<FieldSelectorEnum>;
   readonly generateOnBuild: InputMaybe<FieldSelectorEnum>;
   readonly typesOutputPath: InputMaybe<FieldSelectorEnum>;
 };
 
 type SiteGraphqlTypegenFilterInput = {
+  readonly documentSearchPaths: InputMaybe<StringQueryOperatorInput>;
   readonly generateOnBuild: InputMaybe<BooleanQueryOperatorInput>;
   readonly typesOutputPath: InputMaybe<StringQueryOperatorInput>;
 };
 
 type SiteGraphqlTypegenSortInput = {
+  readonly documentSearchPaths: InputMaybe<SortOrderEnum>;
   readonly generateOnBuild: InputMaybe<SortOrderEnum>;
   readonly typesOutputPath: InputMaybe<SortOrderEnum>;
 };

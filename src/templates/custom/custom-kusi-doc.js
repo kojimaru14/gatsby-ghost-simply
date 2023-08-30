@@ -151,7 +151,7 @@ const PostDoc = ({ data, location, pageContext }) => {
 
                     {/* {{!-- content of the documentation --}} */}
                     <article className="py-4 md:py-12 flex-grow">
-                        <div className="max-w-2xl mx-auto md:px-4">
+                        <div className="max-w-4xl mx-auto md:px-4">
                         { useArticleHeader && 
                             <>
                                 <ArticleHeader post={post} /> 

@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@gatsbyjs/reach-router": "^2.0.1",
     "@tryghost/content-api": "^1.11.0",
     "@tryghost/errors": "^1.2.14",
     "@tryghost/helpers": "1.1.75",

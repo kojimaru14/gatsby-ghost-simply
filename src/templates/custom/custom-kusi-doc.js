@@ -118,47 +118,48 @@ const PostDoc = ({ data, location, pageContext }) => {
                 <div className="max-w-extreme mx-auto flex flex-col pb-16 px-4 lg:flex-row">
                     {/* {{!-- Navigating the documentation --}} */}
                     { showLeftPane &&
-                     <div className="sidebar flex-none border-r border-gray-300 order-2 md:w-64 lg:order-none" style={{ borderColor: `var(--border-color)` }}>
-                        <div className="sticky top-16 pr-5">
-                            <nav className="py-12 overflow-y-auto lg:max-h-(screen-16) scroll-transparent">
-                                <div className="uppercase font-medium text-sm text-gray-600 mb-3 px-2">{t(`Getting_Started`, `Getting Started`)}</div>
+                        <div className="sidebar flex-none border-r border-gray-300 order-2 md:w-64 lg:order-none" style={{ borderColor: `var(--border-color)` }}>
+                            <div className="sticky top-16 pr-5">
+                                <nav className="py-12 overflow-y-auto lg:max-h-(screen-16) scroll-transparent">
+                                    <div className="uppercase font-medium text-sm text-gray-600 mb-3 px-2">{t(`Getting_Started`, `Getting Started`)}</div>
 
-                                <ul itemScope itemType="http://www.schema.org/SiteNavigationElement" role="menu" className="leading-tight text-base">
-                                    {/* {{#get "posts" filter="tags:{{tags.[0].slug}}" limit="all" order="published_at asc"}}
+                                    <ul itemScope itemType="http://www.schema.org/SiteNavigationElement" role="menu" className="leading-tight text-base">
+                                        {/* {{#get "posts" filter="tags:{{tags.[0].slug}}" limit="all" order="published_at asc"}}
 
-                                    {{!-- {{#get "posts" filter="tags:{{primary_tag.slug}}" limit="all" order="published_at asc"}} --}} */}
+                                        {{!-- {{#get "posts" filter="tags:{{primary_tag.slug}}" limit="all" order="published_at asc"}} --}} */}
 
-                                    {posts.map((item) => {
-                                        const post = item.node
-                                        post.url = resolveUrl(pageContext.collectionPath, post.url)
-                                        return (
-                                            <li itemProp="name" role="menuitem" key={item.node.id}>
-                                                <Link
-                                                    to={relativeUrl(item.node.url)}
-                                                    className="menu-link p-2 flex hover:text-primary relative transition-colors duration-200"
-                                                    activeClassName="is-active text-primary pl-4 font-medium"
-                                                    itemProp="url">
-                                                    <span className="menu-link-bg rounded-md absolute inset-0 bg-primary opacity-0"></span>
-                                                    <span className="relative">{item.node.title}</span>
-                                                </Link>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </nav>
-                        </div>
-                    </div> }
+                                        {posts.map((item) => {
+                                            const post = item.node
+                                            post.url = resolveUrl(pageContext.collectionPath, post.url)
+                                            return (
+                                                <li itemProp="name" role="menuitem" key={item.node.id}>
+                                                    <Link
+                                                        to={relativeUrl(item.node.url)}
+                                                        className="menu-link p-2 flex hover:text-primary relative transition-colors duration-200"
+                                                        activeClassName="is-active text-primary pl-4 font-medium"
+                                                        itemProp="url">
+                                                        <span className="menu-link-bg rounded-md absolute inset-0 bg-primary opacity-0"></span>
+                                                        <span className="relative">{item.node.title}</span>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div> 
+                    }
 
                     {/* {{!-- content of the documentation --}} */}
                     <article className="py-4 md:py-12 flex-grow">
                         <div className="max-w-4xl mx-auto md:px-4">
-                        { useArticleHeader && 
-                            <>
-                                <ArticleHeader post={post} /> 
-                                { post.feature_image && <ArticleFeaturedImage figureClass="block mx-auto max-w-4xl mt-12 px-4" zoomable={true} article={post} /> }
-                            </>
-                        }
-
+                            { useArticleHeader && 
+                                <>
+                                    <ArticleHeader post={post} /> 
+                                    { post.feature_image && <ArticleFeaturedImage figureClass="block mx-auto max-w-4xl mt-12 px-4" zoomable={true} article={post} /> }
+                                </>
+                            }
+                            
                             <section className="post-body font-sans has-sidebar text-base leading-relaxed js-kusi-doc" dangerouslySetInnerHTML={{ __html: post.childHtmlRehype.html }}>
                             </section>
                             {/* {{!-- Button to edit on GitHub - add link on Facebook description --}} */}

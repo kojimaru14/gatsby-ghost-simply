@@ -1546,11 +1546,11 @@ a>code[class*=language-] {
     font-size: 1rem
 }
 
-.post-body .kg-card+:not(.kg-card):not(.kg-code-card),
+/* .post-body .kg-card+:not(.kg-card):not(.kg-code-card),
 .post-body :not(.kg-card):not([id])+.kg-card+:not(.kg-code-card) {
     margin-bottom: 0;
     margin-top: 6vmin
-}
+} */
 
 .kg-embed-card {
     align-items: center;

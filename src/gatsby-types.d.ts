@@ -1288,7 +1288,6 @@ type GhostPost = Node & {
   readonly feature_image_alt: Maybe<Scalars['String']>;
   readonly feature_image_caption: Maybe<Scalars['String']>;
   readonly featured: Scalars['Boolean'];
-  readonly fields: Maybe<GhostPostFields>;
   readonly ghostId: Maybe<Scalars['String']>;
   readonly html: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
@@ -1424,7 +1423,6 @@ type GhostPostFieldSelector = {
   readonly feature_image_alt: InputMaybe<FieldSelectorEnum>;
   readonly feature_image_caption: InputMaybe<FieldSelectorEnum>;
   readonly featured: InputMaybe<FieldSelectorEnum>;
-  readonly fields: InputMaybe<GhostPostFieldsFieldSelector>;
   readonly ghostId: InputMaybe<FieldSelectorEnum>;
   readonly html: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
@@ -1455,22 +1453,6 @@ type GhostPostFieldSelector = {
   readonly visibility: InputMaybe<FieldSelectorEnum>;
 };
 
-type GhostPostFields = {
-  readonly localFeatureImage: Maybe<Scalars['String']>;
-};
-
-type GhostPostFieldsFieldSelector = {
-  readonly localFeatureImage: InputMaybe<FieldSelectorEnum>;
-};
-
-type GhostPostFieldsFilterInput = {
-  readonly localFeatureImage: InputMaybe<StringQueryOperatorInput>;
-};
-
-type GhostPostFieldsSortInput = {
-  readonly localFeatureImage: InputMaybe<SortOrderEnum>;
-};
-
 type GhostPostFilterInput = {
   readonly access: InputMaybe<BooleanQueryOperatorInput>;
   readonly authors: InputMaybe<GhostAuthorFilterListInput>;
@@ -1491,7 +1473,6 @@ type GhostPostFilterInput = {
   readonly feature_image_alt: InputMaybe<StringQueryOperatorInput>;
   readonly feature_image_caption: InputMaybe<StringQueryOperatorInput>;
   readonly featured: InputMaybe<BooleanQueryOperatorInput>;
-  readonly fields: InputMaybe<GhostPostFieldsFilterInput>;
   readonly ghostId: InputMaybe<StringQueryOperatorInput>;
   readonly html: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
@@ -1583,7 +1564,6 @@ type GhostPostSortInput = {
   readonly feature_image_alt: InputMaybe<SortOrderEnum>;
   readonly feature_image_caption: InputMaybe<SortOrderEnum>;
   readonly featured: InputMaybe<SortOrderEnum>;
-  readonly fields: InputMaybe<GhostPostFieldsSortInput>;
   readonly ghostId: InputMaybe<SortOrderEnum>;
   readonly html: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
@@ -3960,7 +3940,6 @@ type Query_ghostPostArgs = {
   feature_image_alt: InputMaybe<StringQueryOperatorInput>;
   feature_image_caption: InputMaybe<StringQueryOperatorInput>;
   featured: InputMaybe<BooleanQueryOperatorInput>;
-  fields: InputMaybe<GhostPostFieldsFilterInput>;
   ghostId: InputMaybe<StringQueryOperatorInput>;
   html: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
